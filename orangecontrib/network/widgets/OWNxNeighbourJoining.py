@@ -1,6 +1,6 @@
 from AnyQt.QtWidgets import QLayout
 from Orange.misc import DistMatrix
-from Orange.widgets.gui import auto_commit
+from Orange.widgets.gui import auto_commit, widgetBox, widgetLabel
 from Orange.widgets.settings import Setting
 from Orange.widgets.widget import OWWidget
 from orangecontrib.network import Graph
@@ -26,6 +26,8 @@ class OWNeighbourJoining(OWWidget):
     want_main_area = False
     _auto_apply = Setting(default=True)
 
+    _NO_INPUT_INFO_TEXT = "No data on input."
+
     def __init__(self):
         super().__init__()
         self._input_distances = None
@@ -34,6 +36,12 @@ class OWNeighbourJoining(OWWidget):
     def _setup_layout(self):
         self.controlArea.setMinimumWidth(self.controlArea.sizeHint().width())
         self.layout().setSizeConstraint(QLayout.SetFixedSize)
+
+        widget_box = widgetBox(self.controlArea, "Info")
+        self.input_distances_info = widgetLabel(
+            widget=widget_box,
+            label=self._NO_INPUT_INFO_TEXT
+        )
 
         auto_commit(
             widget=self.controlArea,
@@ -44,9 +52,21 @@ class OWNeighbourJoining(OWWidget):
             commit=self.commit
         )
 
-    def set_input_distances(self):
-        # todo
-        pass
+    def set_input_distances(self, distances):
+        if distances is None:
+            self.send(_Output.GRAPH, None)
+            self.input_distances_info.setText(self._NO_INPUT_INFO_TEXT)
+            return
+
+        distances_info_text = (
+            "Distance matrix with {:d} rows and {:d} columns on input."
+        ).format(
+            distances.shape[0],
+            distances.shape[1]
+        )
+
+        self._input_distances = distances
+        self.input_distances_info.setText(distances_info_text)
 
     def commit(self):
         # todo
