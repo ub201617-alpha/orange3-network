@@ -67,7 +67,7 @@ class OWNeighbourJoining(OWWidget):
             distances.shape[1]
         )
 
-        self._input_distances = distances
+        self._input_distances = distances.tolist()
         self.input_distances_info.setText(distances_info_text)
 
     def commit(self):
