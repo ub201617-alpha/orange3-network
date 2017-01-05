@@ -93,6 +93,13 @@ class OWNeighbourJoining(OWWidget):
                 graph.set_items(items)
 
         # Add (weighted) edges
+        edge_list = []
+        rows, cols = matrix.shape
+        for i in range(rows):
+            for j in range(i + 1, cols):
+                edge_list.append((i, j, matrix[i, j]))
+
+        graph.add_edges_from((u, v, {'weight': d}) for u, v, d in edge_list)
 
         self.send(_Output.GRAPH, graph)
 
