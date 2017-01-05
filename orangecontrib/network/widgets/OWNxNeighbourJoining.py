@@ -1,4 +1,5 @@
 from AnyQt.QtWidgets import QLayout
+from Orange.data import Table, Domain, StringVariable
 from Orange.misc import DistMatrix
 from Orange.widgets.gui import auto_commit, widgetBox, widgetLabel
 from Orange.widgets.settings import Setting
@@ -29,6 +30,7 @@ class OWNeighbourJoining(OWWidget):
     _auto_apply = Setting(default=True)
 
     _NO_INPUT_INFO_TEXT = "No data on input."
+    _EMPTY_MATRIX_INFO_TEXT = "Empty distance matrix."
 
     def __init__(self):
         super().__init__()
@@ -54,20 +56,26 @@ class OWNeighbourJoining(OWWidget):
             commit=self.commit
         )
 
-    def set_input_distances(self, distances):
-        if distances is None:
+    def set_input_distances(self, matrix):
+        if matrix is None:
             self.send(_Output.GRAPH, None)
             self.input_distances_info.setText(self._NO_INPUT_INFO_TEXT)
             return
+        else:
+            N, _ = matrix.shape
+            if N < 2:
+                self.send(_Output.GRAPH, None)
+                self.input_distances_info.setText(self._EMPTY_MATRIX_INFO_TEXT)
+                return
 
         distances_info_text = (
             "Distance matrix with {:d} rows and {:d} columns on input."
         ).format(
-            distances.shape[0],
-            distances.shape[1]
+            matrix.shape[0],
+            matrix.shape[1]
         )
 
-        self._input_distances = distances.tolist()
+        self._input_distances = matrix
         self.input_distances_info.setText(distances_info_text)
 
     def commit(self):
