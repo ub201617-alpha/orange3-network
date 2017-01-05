@@ -79,8 +79,22 @@ class OWNeighbourJoining(OWWidget):
         self.input_distances_info.setText(distances_info_text)
 
     def commit(self):
-        # todo
-        pass
+        matrix = self._input_distances
+
+        graph = Graph()
+        graph.add_nodes_from(range(matrix.shape[0]))
+
+        if matrix is not None and matrix.row_items is not None:
+            if isinstance(matrix.row_items, Table):
+                graph.set_items(matrix.row_items)
+            else:
+                data = [[str(x)] for x in matrix.row_items]
+                items = Table(Domain([], metas=[StringVariable('label')]), data)
+                graph.set_items(items)
+
+        # Add (weighted) edges
+
+        self.send(_Output.GRAPH, graph)
 
 
 if __name__ == '__main__':
