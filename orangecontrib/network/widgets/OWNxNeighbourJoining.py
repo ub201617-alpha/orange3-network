@@ -5,6 +5,7 @@ from Orange.widgets.gui import auto_commit, widgetBox, widgetLabel
 from Orange.widgets.settings import Setting
 from Orange.widgets.widget import OWWidget
 from orangecontrib.network import Graph
+# from orangecontrib.neighbour_joining import join_neighbours
 
 import numpy as np
 
@@ -80,6 +81,8 @@ class OWNeighbourJoining(OWWidget):
 
     def commit(self):
         matrix = self._input_distances
+
+        # matrix = join_neighbours(matrix)
 
         graph = Graph()
         graph.add_nodes_from(range(matrix.shape[0]))
