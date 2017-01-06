@@ -49,10 +49,59 @@ class NeighbourJoining:
         old_indexes.remove(min_y)
 
         new_matrix = self._calculate_new_distances(old_indexes, min_x, min_y)
+
+        # Add new node that will join min_x and min_y
+        new_node = self.get_new_node_name()
+        self.nodes.append(new_node)
+        # TODO Some weird magic, because we're not keeping track of history. Make better!
+        if min_x:
+            # If min_x is not 0 it means we are adding two leaf nodes (I think)
+            self.last_removed = min_x
+            just_removed = min_x
+        else:
+            # If min_x == 0 , we're adding to existing graph
+            just_removed = self.last_removed
+            self.last_removed = new_node
+
+        # Save new edges and save the calculated distance for them
+        self.edges[(new_node, just_removed)] = fu
+        self.edges[(new_node, min_y + self.removed)] = gu
+
+        # TODO this is some basic (and wrong) way to adjust for missing indexes
+        self.removed += 1
         return (min_x, min_y), new_matrix
+
+    def get_final_graph(self):
+        """Run self._join_neighbours until we get a full graph
+        """
+        while len(self.distances) > 2:
+            (min_x, min_y), self.distances = self._join_neighbours()
+        self.edges[]
+
+        # TODO we need to add the final edge, but can't do so without first implementing some history tracking
+        return self.distances
+
+    def get_all_nodes(self):
+        return self.nodes
+
+    def get_all_edges(self):
+        return self.edges
 
     def __init__(self, data):
         self.distances = data
+        self.initial_distances = data
+        # TODO probably not the best naming -- if input is DistMatrix, we can use labels for node naming
+        # But then again, output won't accept anything other than indexes
+        self.nodes = list(range(len(self.distances)))
+        # Because we'll be changing self.distances, we need to keep track of what's what
+        # TODO this is just a naive implementation, that won't work all of the time
+        self.removed = 0
+        self.last_removed = 0
+        self.edges = {}
+
+    def get_new_node_name(self):
+        # Just use the next index
+        return len(self.nodes)
 
     def __call__(self, *args, **kwargs):
         while len(self.distances) > 2:

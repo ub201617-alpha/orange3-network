@@ -82,44 +82,26 @@ class OWNeighbourJoining(OWWidget):
     def commit(self):
         matrix = self._input_distances
 
-        graph = Graph()
-        graph.add_nodes_from(range(matrix.shape[0]))
-
-        # Add names to items, because Orange.network.Graph requires nodes to be :int: and nothing else
-        for i in range(matrix.shape[0]):
-            graph.node[i]['name'] = str(matrix.row_items[i])
-
-        if matrix is not None and matrix.row_items is not None:
-            if isinstance(matrix.row_items, Table):
-                graph.set_items(matrix.row_items)
-            else:
-                data = [[str(x)] for x in matrix.row_items]
-                items = Table(Domain([], metas=[StringVariable('label')]), data)
-                graph.set_items(items)
-
         nj = NeighbourJoining(matrix)
 
-        previous_node = 0
-        items = matrix.shape[0]
-        i = 0
+        nj.get_final_graph()
+        nodes = nj.get_all_nodes()
 
-        for joined in nj():
-            join_node = joined[0][1]
-            new_node = items + i
-            graph.add_node(new_node)
-            graph.add_edge(new_node, previous_node)
-            graph.add_edge(new_node, join_node + i)
-            previous_node = new_node
-            i += 1
+        graph = Graph()
+        graph.add_nodes_from(nodes)
+
+        if matrix is not None and matrix.row_items is not None:
+            # if isinstance(matrix.row_items, Table):
+            #     graph.set_items(matrix.row_items)
+            # else:
+            data = [[str(x)] for x in matrix.row_items] + [[node] for node in nodes[matrix.shape[0]:]]
+            items = Table(Domain([], metas=[StringVariable('label')]), data)
+            graph.set_items(items)
 
         # Add (weighted) edges
-        # edge_list = []
-        # rows, cols = matrix.shape
-        # for i in range(rows):
-        #     for j in range(i + 1, cols):
-        #         edge_list.append((i, j, matrix[i, j]))
+        edges = nj.get_all_edges()
 
-        # graph.add_edges_from((u, v, {'weight': d}) for u, v, d in edge_list)
+        graph.add_edges_from((nodes[0], nodes[1], {'weight': d}) for nodes, d in edges.items())
 
         self.send(_Output.GRAPH, graph)
 
