@@ -85,6 +85,10 @@ class OWNeighbourJoining(OWWidget):
         graph = Graph()
         graph.add_nodes_from(range(matrix.shape[0]))
 
+        # Add names to items, because Orange.network.Graph requires nodes to be :int: and nothing else
+        for i in range(matrix.shape[0]):
+            graph.node[i]['name'] = str(matrix.row_items[i])
+
         if matrix is not None and matrix.row_items is not None:
             if isinstance(matrix.row_items, Table):
                 graph.set_items(matrix.row_items)
@@ -93,14 +97,29 @@ class OWNeighbourJoining(OWWidget):
                 items = Table(Domain([], metas=[StringVariable('label')]), data)
                 graph.set_items(items)
 
-        # Add (weighted) edges
-        edge_list = []
-        rows, cols = matrix.shape
-        for i in range(rows):
-            for j in range(i + 1, cols):
-                edge_list.append((i, j, matrix[i, j]))
+        nj = NeighbourJoining(matrix)
 
-        graph.add_edges_from((u, v, {'weight': d}) for u, v, d in edge_list)
+        previous_node = 0
+        items = matrix.shape[0]
+        i = 0
+
+        for joined in nj():
+            join_node = joined[0][1]
+            new_node = items + i
+            graph.add_node(new_node)
+            graph.add_edge(new_node, previous_node)
+            graph.add_edge(new_node, join_node + i)
+            previous_node = new_node
+            i += 1
+
+        # Add (weighted) edges
+        # edge_list = []
+        # rows, cols = matrix.shape
+        # for i in range(rows):
+        #     for j in range(i + 1, cols):
+        #         edge_list.append((i, j, matrix[i, j]))
+
+        # graph.add_edges_from((u, v, {'weight': d}) for u, v, d in edge_list)
 
         self.send(_Output.GRAPH, graph)
 
