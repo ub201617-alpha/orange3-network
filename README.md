@@ -13,7 +13,10 @@ compatible with the existing widgets found in Orange-Network add-on.
 
 Implementation
 --------------
-
+```python
+    def foo():
+        print("bar")
+```
 
 Use cases
 ---------
