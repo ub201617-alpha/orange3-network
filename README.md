@@ -68,4 +68,6 @@ Use cases
 
 Example 1:
 
-    ![example 1](http://shrani.si/f/2H/9j/4IiRAHSr/screenshot-2017-01-07-15.png "example 1")
+    ![example_1](http://shrani.si/f/2H/9j/4IiRAHSr/screenshot-2017-01-07-15.png "example_1")
+
+
