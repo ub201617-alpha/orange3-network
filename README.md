@@ -42,6 +42,22 @@ to a newly created node.
 
 3. Calculates the distance from each of the item in the pair to this new node by the formula:
 
+    ![distance formula](http://shrani.si/f/b/wZ/1nJ6SWch/img1.png "distance formula")
+
+    Pair f and g are the paired taxa and u is the newly created node. The branches joining f and u and g and u ,
+    and their lengths, δ (f, u) and δ (g, u) are part of the tree which is gradually being created; they neither
+    affect nor are affected by later neighbor-joining steps.
+
+4. For each pair was not considered in the previous step, we calculate the distance to the new node by the formula:
+
+    ![distance to the new node](http://shrani.si/f/2W/KW/1HavHKL/img2.png "distance to the new node")
+
+    where u is the new node, k is the node which we want to calculate the distance to and f and g are the members of the pair just joined.
+
+5. Start the algorithm again, replacing the pair of joined neighbors with the new node and using the distances calculated in the previous step.
+
+Complexity
+----------
 
 Use cases
 ---------
