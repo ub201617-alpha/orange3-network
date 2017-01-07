@@ -48,7 +48,6 @@ class NeighbourJoining:
         min_x, min_y = self._get_minimum_element_index(q_matrix)
         n = np.sum(~np.all(np.isnan(distances), axis=1))  # length without nan values
 
-        # TODO nansum, etc...
         d_xy = distances[min_x][min_y]
         sum_dx = np.nansum(distances[min_x])
         sum_dy = np.nansum(distances[min_y])
@@ -70,47 +69,54 @@ class NeighbourJoining:
         return self.edges
 
     def __init__(self, data):
+        N = len(data)
+        self.num_of_iterations = N - 3
         self.distances = np.array(data)
-        self.initial_distances = np.array(data)
-        # TODO probably not the best naming -- if input is DistMatrix, we can use labels for node naming
-        # But then again, output won't accept anything other than indexes
-        self.nodes = list(range(len(self.distances)))
-        # Because we'll be changing self.distances, we need to keep track of what's what
-        # TODO this is just a naive implementation, that won't work all of the time
-        self.removed = 0
-        self.last_removed = 0
-        self.edges = {}
+        self.max_node = N + self.num_of_iterations
+        self.nodes = list(range(N))
+        self.nodes.append(self.max_node)
+        self.edges = {(self.max_node, i): 0 for i in range(N)}
 
     def get_new_node_name(self):
         # Just use the next index
         return len(self.nodes)
 
-    def __call__(self, *args, **kwargs):
-        N = len(self.distances)
-        num_of_iterations = N - 3  # by theory
+    def get_num_iterations(self):
+        return self.num_of_iterations
 
-        # init graph
-        max_node = N + num_of_iterations
-        self.nodes = list(range(N))
-        self.nodes.append(max_node)
-        self.edges = {(max_node, i): 0 for i in range(N)}
+    def get_final_graph_progress(self):
+        for i in range(self.num_of_iterations):
+            self._neighbour_joining_step()
+            yield i
 
-        for i in range(num_of_iterations):
-            new_node_index = len(self.distances)
-            (j1, j2), (d1, d2) = self._join_neighbours()
-            self.nodes.append(new_node_index)
-            self.edges[(new_node_index, j1)] = d1
-            self.edges[(new_node_index, j2)] = d2
-            self.edges[(max_node, new_node_index)] = 0
-            self.edges.pop((max_node, j1), None)
-            self.edges.pop((max_node, j2), None)
+        self._neighbour_joining_last_step()
+        yield self.num_of_iterations
 
-        # last distances calculation
+    def _neighbour_joining_step(self):
+        new_node_index = len(self.distances)
         (j1, j2), (d1, d2) = self._join_neighbours()
-        self.edges[(max_node, j1)] = d1
-        self.edges[(max_node, j2)] = d2
+        self.nodes.append(new_node_index)
+        self.edges[(new_node_index, j1)] = d1
+        self.edges[(new_node_index, j2)] = d2
+        self.edges[(self.max_node, new_node_index)] = 0
+        self.edges.pop((self.max_node, j1), None)
+        self.edges.pop((self.max_node, j2), None)
+
+    def _neighbour_joining_last_step(self):
+        """
+        Remaining distances calculation
+        """
+        (j1, j2), (d1, d2) = self._join_neighbours()
+        self.edges[(self.max_node, j1)] = d1
+        self.edges[(self.max_node, j2)] = d2
         last_idx, _ = self._get_minimum_element_index(self.distances)
-        self.edges[(max_node, last_idx)] = self.distances[max_node][last_idx]
+        self.edges[(self.max_node, last_idx)] = self.distances[self.max_node][last_idx]
+
+    def __call__(self, *args, **kwargs):
+        for i in range(self.num_of_iterations):
+            self._neighbour_joining_step()
+
+        self._neighbour_joining_last_step()
 
 
 if __name__ == '__main__':
@@ -130,6 +136,5 @@ if __name__ == '__main__':
     test_distances = np.array(test_distances)
     nj = NeighbourJoining(data=test_distances)
     nj.get_final_graph()
-
     for edge in nj.get_all_edges():
         print(edge)

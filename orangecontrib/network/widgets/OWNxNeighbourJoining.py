@@ -1,7 +1,7 @@
 from AnyQt.QtWidgets import QLayout
 from Orange.data import Table, Domain, StringVariable
 from Orange.misc import DistMatrix
-from Orange.widgets.gui import auto_commit, widgetBox, widgetLabel
+from Orange.widgets.gui import auto_commit, widgetBox, widgetLabel, ProgressBar
 from Orange.widgets.settings import Setting
 from Orange.widgets.widget import OWWidget
 from orangecontrib.network import Graph
@@ -86,8 +86,12 @@ class OWNeighbourJoining(OWWidget):
 
         if matrix is not None:
             nj = NeighbourJoining(matrix)
+            n_iterations = nj.get_num_iterations()
 
-            nj.get_final_graph()
+            with self.progressBar(n_iterations) as progress:
+                for i in nj.get_final_graph_progress():
+                    progress.advance()
+
             nodes = nj.get_all_nodes()
 
             graph.add_nodes_from(nodes)
