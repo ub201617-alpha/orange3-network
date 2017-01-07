@@ -44,11 +44,11 @@ to a newly created node.
 
     ![distance formula](http://shrani.si/f/b/wZ/1nJ6SWch/img1.png "distance formula")
 
-    Pair f and g are the paired taxa and u is the newly created node. The branches joining f and u and g and u ,
+    Item f and g are the paired items and u is the newly created node. The branches joining f and u and g and u ,
     and their lengths, δ (f, u) and δ (g, u) are part of the tree which is gradually being created; they neither
     affect nor are affected by later neighbor-joining steps.
 
-4. For each pair was not considered in the previous step, we calculate the distance to the new node by the formula:
+4. For each item not considered in the previous step, we calculate the distance to the new node by the formula:
 
     ![distance to the new node](http://shrani.si/f/2W/KW/1HavHKL/img2.png "distance to the new node")
 
@@ -58,6 +58,10 @@ to a newly created node.
 
 Complexity
 ----------
+
+Neighbor joining on a set of n items requires n-3 iterations. At each step one has to build and search a Q matrix.
+Initially the Q matrix is size n × n, then the next step it is (n − 1) × (n − 1), etc. Implementing this in a straightforward way
+leads to an algorithm with a time complexity of O( n^3 ); implementations exist which use heuristics to do much better than this on average.
 
 Use cases
 ---------
