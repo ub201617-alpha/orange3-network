@@ -28,7 +28,7 @@ class OWNeighbourJoining(OWWidget):
     outputs = [(_Output.GRAPH, Graph)]
 
     want_main_area = False
-    _auto_apply = Setting(default=True)
+    auto_apply = Setting(default=True)
 
     _NO_INPUT_INFO_TEXT = "No data on input."
     _EMPTY_MATRIX_INFO_TEXT = "Empty distance matrix."
@@ -51,7 +51,7 @@ class OWNeighbourJoining(OWWidget):
         auto_commit(
             widget=self.controlArea,
             master=self,
-            value="_auto_apply",
+            value="auto_apply",
             label="Apply",
             checkbox_label="Auto Apply",
             commit=self.commit
@@ -78,37 +78,36 @@ class OWNeighbourJoining(OWWidget):
 
         self._input_distances = matrix
         self.input_distances_info.setText(distances_info_text)
+        self.commit()
 
     def commit(self):
         matrix = self._input_distances
-
-        nj = NeighbourJoining(matrix)
-
-        nj.get_final_graph()
-        nodes = nj.get_all_nodes()
-
         graph = Graph()
-        graph.add_nodes_from(nodes)
 
-        if matrix is not None and matrix.row_items is not None:
-            # if isinstance(matrix.row_items, Table):
-            #     graph.set_items(matrix.row_items)
-            # else:
-            data = [[str(x)] for x in matrix.row_items] + [[node] for node in nodes[matrix.shape[0]:]]
-            items = Table(Domain([], metas=[StringVariable('label')]), data)
-            graph.set_items(items)
+        if matrix is not None:
+            nj = NeighbourJoining(matrix)
 
-        # Add (weighted) edges
-        edges = nj.get_all_edges()
+            nj.get_final_graph()
+            nodes = nj.get_all_nodes()
 
-        graph.add_edges_from((nodes[0], nodes[1], {'weight': d}) for nodes, d in edges.items())
+            graph.add_nodes_from(nodes)
 
-        self.send(_Output.GRAPH, graph)
+            if matrix.row_items is not None:
+                data = [[str(x)] for x in matrix.row_items] + [[node] for node in nodes[matrix.shape[0]:]]
+                items = Table(Domain([], metas=[StringVariable('label')]), data)
+                graph.set_items(items)
+
+            edges = nj.get_all_edges()
+
+            graph.add_edges_from((nodes[0], nodes[1], {'weight': d}) for nodes, d in edges.items())
+
+            self.send(_Output.GRAPH, graph)
 
 
 if __name__ == '__main__':
     import sys
     from AnyQt.QtWidgets import QApplication
+
     app = QApplication(sys.argv)
     widget = OWNeighbourJoining()
     widget.show()
