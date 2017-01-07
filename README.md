@@ -65,3 +65,7 @@ leads to an algorithm with a time complexity of O( n^3 ); implementations exist 
 
 Use cases
 ---------
+
+Example 1:
+
+    ![example 1](http://shrani.si/f/2H/9j/4IiRAHSr/screenshot-2017-01-07-15.png "example1")
