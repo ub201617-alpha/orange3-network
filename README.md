@@ -1,4 +1,4 @@
-Project D2
+Neighbor-joining widget [project D2]
 ====================================
 Our project focused on implementing an Orange widget, that will compute the results of the neighbor-joining algorithm given a distance matrix. The output network will be compatible with the existing widgets in the Orange-Network add-on. The goal of this widget is to calculate and help visualize the phylogenetic tree and showcase the original nodes and their inferred common ancestors.
 
