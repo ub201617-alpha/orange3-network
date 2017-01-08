@@ -89,7 +89,7 @@ Team contributions
 2. Nejc Ilenič
   * Implemented skeleton for the OWNxNeigbourJoining widget (UI), implemented the set_input_distances method (setting input data)
 3. Lovro Podgoršek
-  * ABC
+  * Writed README documentation
 4. Jure Prevc
   * Tests and refactorization of the algorithm, provided correct output (Graph type), fixed auto commit
    and implemented progress bar in GUI
