@@ -61,7 +61,8 @@ Use cases
 ---------
 
 Example 1:
-  ![example 1](http://shrani.si/f/2H/9j/4IiRAHSr/screenshot-2017-01-07-15.png "example 1")
+
+![example 1](http://shrani.si/f/2H/9j/4IiRAHSr/screenshot-2017-01-07-15.png "example 1")
 
 
 Team contributions
@@ -75,6 +76,7 @@ Team contributions
 3. Lovro Podgoršek
   * ABC
 4. Jure Prevc
-  * ABC
+  * Tests and refactorization of the algorithm, provided correct output (Graph type), fixed auto commit
+   and implemented progress bar in GUI
 5. Jaka Šušteršič
   * Neighbour joining algorithm implementation (orange3-prototypes repository)
