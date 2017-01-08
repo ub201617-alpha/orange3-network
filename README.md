@@ -104,6 +104,6 @@ Team contributions
 3. Lovro Podgoršek
   * Writen README documentation.
 4. Jure Prevc
-  * Tests and refactorization of the algorithm, provided correct output (Graph type), fixed auto commit and implemented progress bar in GUI.
+  * Tests and refactorization of the algorithm, provided correct output (Graph type), fixed auto commit, implemented progress bar in GUI and provided use case implementations.
 5. Jaka Šušteršič
   * Neighbour joining algorithm initial implementation (orange3-prototypes repository), documentation editing and translating.
