@@ -79,6 +79,10 @@ The edge nodes contain town name labels, while the nodes interconecting them con
 
 ###Drugi primer
 
+![example 2 hier](http://shrani.si/f/3T/i3/1KgDpXco/screenshot-2017-01-08-18.png "example 2 hier")
+
+![example 2 gui](http://shrani.si/f/3t/AP/49Nvm6nJ/screenshot-2017-01-08-18.png "example 2 gui")
+
 ![example 2](http://shrani.si/f/3q/oh/2FFEuFNT/unspecified123.png "example 2")
 
 
