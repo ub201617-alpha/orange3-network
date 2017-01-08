@@ -69,9 +69,15 @@ edges = nj.get_all_edges()
 Use cases
 ---------
 
-Example 1:
+###Slovenian towns
+
+Our first sample use case includes the slovenian-towns.dst data set, which is included in the orange framework data set. To better show the individual results of neigbour joining we used a subset of only 10 major towns and used the UI work flow described in the previous chapters.
+
+The edge nodes contain town name labels, while the nodes interconecting them contain the index of the formed joint node. The width of the line connecting nodes represents their respective relative distance. Nodes further apart are connected by thicker lines and vice-versa.
 
 ![example 1](http://shrani.si/f/2H/9j/4IiRAHSr/screenshot-2017-01-07-15.png "example 1")
+
+###Drugi primer
 
 
 Team contributions
