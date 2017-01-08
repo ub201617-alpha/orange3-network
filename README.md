@@ -39,7 +39,7 @@ UI workflow usage
 
 A typical input could be a Distance Matrix widget or a Distance file widget. The output is best visualized using the Network Explorer widget and enabling relative edge widths.
 
-![example 1](http://shrani.si/f/1q/CO/1iS39NNK/screen-shot-2017-01-07-a.png "example 1")
+![example 1](http://shrani.si/f/0/115/2P0vSp1q/screen-shot-2017-01-08-a.png "example 1")
 
 Script usage
 --------------
