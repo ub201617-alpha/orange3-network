@@ -76,14 +76,22 @@ Our first sample use case includes the slovenian-towns.dst data set, which is in
 The edge nodes contain town name labels, while the nodes interconecting them contain the index of the formed joint node. The width of the line connecting nodes represents their respective relative distance. Nodes further apart are connected by thicker lines and vice-versa. The connected nodes and their drawn distances in the output closely resemble the sequence of towns along the A2 motorway on the sections Ljubljana-Kranj-Bled-Jesenice.
 
 ![example 1](http://shrani.si/f/2H/9j/4IiRAHSr/screenshot-2017-01-07-15.png "example 1")
+###Iris
 
-###Drugi primer
-
-![example 2 hier](http://shrani.si/f/3T/i3/1KgDpXco/screenshot-2017-01-08-18.png "example 2 hier")
+Our second example uses the iris dataset, which is also included in the Orange framework data set. To obtain a clearer visualization we performed some additional pruning steps of the input.
 
 ![example 2 gui](http://shrani.si/f/3t/AP/49Nvm6nJ/screenshot-2017-01-08-18.png "example 2 gui")
 
+We first sampled the input file to limit the input size, calculated the pair distances,
+used hierarchical clustering to choose only the most distant groups of individual species and their members so they were as close to each other as possible.
+
+![example 2 hier](http://shrani.si/f/3T/i3/1KgDpXco/screenshot-2017-01-08-18.png "example 2 hier")
+
+This calculated data set was then connected into the distances widget again and finally into our neigbor-joining widget.
+
 ![example 2](http://shrani.si/f/3q/oh/2FFEuFNT/unspecified123.png "example 2")
+
+The result clearly shows the three distinct species (C1, C2, C3) and their separation with the much wider connecting lines.
 
 
 Team contributions
@@ -98,4 +106,4 @@ Team contributions
 4. Jure Prevc
   * Tests and refactorization of the algorithm, provided correct output (Graph type), fixed auto commit and implemented progress bar in GUI.
 5. Jaka Šušteršič
-  * Neighbour joining algorithm initial implementation (orange3-prototypes repository), documentation proofreading and translating.
+  * Neighbour joining algorithm initial implementation (orange3-prototypes repository), documentation editing and translating.
