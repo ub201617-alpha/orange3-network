@@ -73,7 +73,7 @@ Use cases
 
 Our first sample use case includes the slovenian-towns.dst data set, which is included in the orange framework data set. To better show the individual results of neigbour joining we used a subset of only 10 major towns and used the UI work flow described in the previous chapters.
 
-The edge nodes contain town name labels, while the nodes interconecting them contain the index of the formed joint node. The width of the line connecting nodes represents their respective relative distance. Nodes further apart are connected by thicker lines and vice-versa.
+The edge nodes contain town name labels, while the nodes interconecting them contain the index of the formed joint node. The width of the line connecting nodes represents their respective relative distance. Nodes further apart are connected by thicker lines and vice-versa. The connected nodes and their drawn distances in the output closely resemble the sequence of towns along the A2 motorway on the sections Ljubljana-Kranj-Bled-Jesenice.
 
 ![example 1](http://shrani.si/f/2H/9j/4IiRAHSr/screenshot-2017-01-07-15.png "example 1")
 
@@ -94,4 +94,4 @@ Team contributions
   * Tests and refactorization of the algorithm, provided correct output (Graph type), fixed auto commit
    and implemented progress bar in GUI
 5. Jaka Šušteršič
-  * Neighbour joining algorithm implementation (orange3-prototypes repository)
+  * Neighbour joining algorithm implementation (orange3-prototypes repository), Readme
