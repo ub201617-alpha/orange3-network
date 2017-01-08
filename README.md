@@ -85,7 +85,7 @@ Team contributions
 (Widget framework basics and prototype, widget input shaping, widget output shaping, readme formation, widget optimization, widget UI, testing)
 
 1. Žan Anderle
-  * ABC
+  * Prepared the widget (and the algorithm output) to be compatible with other Orange widgets, implemented the initial graph output
 2. Nejc Ilenič
   * Implemented skeleton for the OWNxNeigbourJoining widget (UI), implemented the set_input_distances method (setting input data)
 3. Lovro Podgoršek
