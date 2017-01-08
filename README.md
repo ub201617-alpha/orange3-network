@@ -53,8 +53,17 @@ test_distances = [[0, 5, 9, 9, 8],
                   [8, 9, 7, 3, 0]]
 
 nj = NeighbourJoining(test_distances)
-for joined, new_distances in nj():
-    pass
+nj.get_final_graph()
+nodes = nj.get_all_nodes()
+edges = nj.get_all_edges()
+# edges:
+# {(7, 4): 1.0,
+# (7, 3): 2.0,
+# (6, 5): 3.0,
+# (5, 0): 2.0,
+# (6, 2): 4.0,
+# (5, 1): 3.0,
+# (7, 6): 2.0}
 ```
 
 Use cases
