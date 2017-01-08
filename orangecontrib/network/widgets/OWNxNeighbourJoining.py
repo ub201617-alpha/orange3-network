@@ -20,7 +20,7 @@ class _Output:
 class OWNeighbourJoining(OWWidget):
     name = "Neighbour Joining"
     description = "Computes a phylogenetic tree from a distance matrix."
-    icon = ""
+    icon = "icons/NeighbourJoining.svg"
     priority = 6470
 
     inputs = [(_Input.DISTANCES, DistMatrix, "set_input_distances")]
