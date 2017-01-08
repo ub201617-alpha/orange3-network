@@ -71,7 +71,7 @@ Team contributions
 1. Žan Anderle
   * ABC
 2. Nejc Ilenič
-  * ABC
+  * Implemented skeleton for the OWNxNeigbourJoining widget (UI), implemented the set_input_distances method (setting input data)
 3. Lovro Podgoršek
   * ABC
 4. Jure Prevc

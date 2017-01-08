@@ -1,13 +1,12 @@
 from AnyQt.QtWidgets import QLayout
 from Orange.data import Table, Domain, StringVariable
 from Orange.misc import DistMatrix
-from Orange.widgets.gui import auto_commit, widgetBox, widgetLabel, ProgressBar
+from Orange.widgets.gui import auto_commit, widgetBox, widgetLabel
 from Orange.widgets.settings import Setting
 from Orange.widgets.widget import OWWidget
+
 from orangecontrib.network import Graph
 from orangecontrib.network.neighbour_joining import NeighbourJoining
-
-import numpy as np
 
 
 class _Input:
